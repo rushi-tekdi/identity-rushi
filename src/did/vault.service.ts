@@ -33,7 +33,7 @@ export class VaultService {
     const createSecret = await this.vault.createKVSecret(
       this.token,
       //path ? path + `/${name}` : `ulp/identity-ms/private_keys/${name}`,
-      this.vaultpath,
+      this.vaultpath+`/${name}`,
       secret,
     );
     console.log("writePvtKey createSecret",JSON.stringify(createSecret));
@@ -49,7 +49,7 @@ export class VaultService {
     const read = await this.vault.readKVSecret(
       this.token,
       //path ? path + `/${name}` : `ulp/identity-ms/private_keys/${name}`,
-      this.vaultpath
+      this.vaultpath+`/${name}`
     );
     console.log("readPvtKey read",JSON.stringify(read));
     return read.data;
