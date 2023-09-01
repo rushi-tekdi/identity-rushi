@@ -12,26 +12,39 @@ export class VaultService {
     timeout: 5000,
     proxy: false,
   });
-
   async checkStatus() {
     const status = await this.vault.healthCheck();
+    console.log("checkStatus this.token",this.token);
+    console.log("checkStatus this.vault",JSON.stringify(this.vault));
     await this.vault.readKVEngineConfig(this.token);
+    console.log("checkStatus status",JSON.stringify(status));
     return status;
   }
   async writePvtKey(secret: string, name: string, path?: string) {
+    console.log("writePvtKey this.token",this.token);
+    console.log("writePvtKey this.vault",JSON.stringify(this.vault));
+    console.log("writePvtKey secret",secret);
+    console.log("writePvtKey name",name);
+    console.log("writePvtKey path",path);
     const createSecret = await this.vault.createKVSecret(
       this.token,
       path ? path + `/${name}` : `ulp/identity-ms/private_keys/${name}`,
       secret,
     );
+    console.log("writePvtKey createSecret",JSON.stringify(createSecret));
     return createSecret;
   }
 
   async readPvtKey(name: string, path?: string) {
+    console.log("readPvtKey this.token",this.token);
+    console.log("readPvtKey this.vault",JSON.stringify(this.vault));
+    console.log("readPvtKey name",name);
+    console.log("readPvtKey path",path);
     const read = await this.vault.readKVSecret(
       this.token,
       path ? path + `/${name}` : `ulp/identity-ms/private_keys/${name}`,
     );
+    console.log("readPvtKey read",JSON.stringify(read));
     return read.data;
   }
 }
